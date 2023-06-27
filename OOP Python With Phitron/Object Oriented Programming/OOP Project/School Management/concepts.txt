@@ -1,0 +1,17 @@
+School Management Development
+
+1. Student Management
+2. Teacher Management
+3. Cafeteria
+4. Sports Management
+5. Club Management
+6. Event Management
+7. Library Management
+8. Asset Management
+
+Core Functionalities
+
+1. There will be a cassroom consisting of multiple students
+2. Student can enroll multiple classes
+3. Teacher will take classes, they will take exams, they grade the exams
+4. System wil generate the overall grade

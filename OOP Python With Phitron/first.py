@@ -1,0 +1,5 @@
+print('kopa python kopa')
+print('Python re dhore felsi, mamma!!!')
+print(210)
+print(554544)
+print('Hello Python')
