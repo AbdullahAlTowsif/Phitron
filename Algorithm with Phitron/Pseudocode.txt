@@ -1,0 +1,277 @@
+Pseudocode of BFS
+=================
+Time Complexity:O(V+E)
+Space Complexity:O(V)
+
+Input -> Connected Graph and a "source"
+Output -> Traverse all nodes and print the traversal order
+
+BFS(graph, source)
+
+- Initiate an array called "visited" and an empty queue "q"
+- mark visited[source] = 1 and q.push(source)
+- while the queue is not empty:
+      - head = q.front()
+      - q.pop()
+      - print the node "head"
+      - for all adjacent nodes of "head":
+           -if visited[adj_node] == 0:
+               -visited[adj_node] = 1 and q.push(adj_node)
+
+
+Pseudocode of DFS
+=================
+
+Time Complexity:O(V+E)
+Space Complexity:O(V)
+
+-> How DFS Traversal works on a Tree
+
+void dfs(int node){
+    cout<<node<<endl;
+    //base case
+    if node does not have any child:
+        return;
+    //general case
+    for all childs of node:
+        dfs(child);
+}
+
+-> How DFS Traversal works on any graph
+
+void dfs(int node){
+    cout<<node<<endl;
+    visited[node]=1;
+
+    for all adj_node of node:
+        if visited[adj_node]==0;
+            dfs(adj_node)
+}
+dfs(src)
+
+
+Pseudocode of Dijkstra
+======================
+
+Time Complexity : O(n^2)
+Space Complexity : O(n)
+
+Input -> a weighted graph and a source
+Output -> distance of all nodes from the source
+
+/*
+u -> V
+
+if d[u] + c(u,v) < d[v]
+    d[v] = d[u] + c(u,v)
+
+*/
+
+- create a distance array "d" // S: O(n)
+- Initiate all values of "d" to infinity // T: O(n)
+- d[src] = 0
+- create a visited array and mark all nodes as unvisited // S: O(n) T: O(n)
+
+    - for i=0 to n-1 // S: O(1) // T: O(n)
+        - pick the "unvisited" node with minimum d[node] // T: O(n) --> O(n^2)
+        - visited[node] = 1 // T: O(1)
+        - for all adj_node of node:
+            - if d[node] + c(node, adj_node) < d[adj_node]:
+                - d[adj_node] = d[node] + c(node, adj_node)
+
+-> Output array "d"
+
+
+
+Pseudocode of Dijkstra (Optimized by Priority Queue)
+====================== =============================
+
+Time Complexity : O(m log n) ==> Here "n" is no of nodes & "m" is no of edges
+Space Complexity : O(m)
+
+Input -> a weighted graph and a source
+Output -> distance of all nodes from the source
+
+/*
+u -> V
+
+if d[u] + c(u,v) < d[v]
+    d[v] = d[u] + c(u,v)
+
+*/
+
+- create a distance array "d" 
+- Initiate all values of "d" to infinity 
+- d[src] = 0
+- create a visited array and mark all nodes as unvisited 
+- take an empty reverse Priority_queue "pq"
+- pq.push({0,src})
+
+
+    - while the Priority_queue is not empty: // O(E)
+        - pick the node with minimum distance value => head_distance, head = pq.front()
+        - pq.pop() // O(log E)
+        - if visited[head] == 1: ignore
+        - visited[head] = 1
+        - for all adj_node of head: // O(E)
+            - if d[head] + c(head, adj_node) < d[adj_node]:
+                - d[adj_node] = d[head] + c(head, adj_node)
+                - pq.push({d[adj_node], adj_node}) // O(log E)
+
+-> Output array "d"
+
+
+
+Pseudocode of Bellman-Ford
+==========================
+
+Time Complexity : O(n*m)
+Space Complexity : O(n)
+
+Input -> A weighted graph and a source node (With no negative cycles)
+Output -> Shortest distance from source node to all other nodes
+
+/*
+
+u ------> v
+
+d[u] + c(u,v) < d[v]
+=> d[v] = d[u] + c(u,v)
+
+*/
+- Create a distance array "d" with all values to infinity
+- d[src] = 0
+
+- for i = 1 to n-1:
+    - for all edge e(u,v,w):
+        - if d[u] + w < d[v]:
+            d[v] = d[u] + w
+
+Print the distance array "d"
+
+
+Bellman Ford : Pseudocode of Negative Cycle Detection
+=====================================================
+
+Time Complexity : O(n*m)
+Space Complexity : O(n)
+
+Input -> A weighted graph and a source node (With no negative cycles)
+Output -> Shortest distance from source node to all other nodes
+
+/*
+
+u ------> v
+
+d[u] + c(u,v) < d[v]
+=> d[v] = d[u] + c(u,v)
+
+*/
+
+- Create a distance array "d" with all values to infinity
+- d[src] = 0
+
+- negative_cycle = false
+
+- for i = 1 to n:
+    - for all edge e(u,v,w):
+        - if d[u] + w < d[v]:
+            - d[v] = d[u] + w
+            - if i == n:
+                - negative_cycle = true
+
+- print whether negative cycle exists
+- Print the distance array "d"
+
+
+
+Pseudocode of Bellman Ford Path Printing
+========================================
+
+
+Time Complexity : O(n*m)
+Space Complexity : O(n)
+
+Input -> A weighted graph & a source node (With no negative cycles) & a destination_node
+Output -> Shortest distance from source node to all other nodes
+
+/*
+
+u ------> v
+
+d[u] + c(u,v) < d[v]
+=> d[v] = d[u] + c(u,v)
+
+*/
+
+- Create a distance array "d" with all values to infinity
+- Create a parent array
+- d[src] = 0
+
+- negative_cycle = false
+- last_updated_node = -1
+
+- for i = 1 to n:
+    - for all edge e(u,v,w):
+        - if d[u] + w < d[v]:
+            - d[v] = d[u] + w
+            - parent[v] = u
+            - if i == n:
+                - negative_cycle = true
+                - last_updated_node = v
+
+- if negative_cycle == false:
+    - Print the distance array "d"
+    - selected_node = destination_node
+    - declare a vector Path
+    - while true:
+        - path.push_back(selected_node)
+        - if selected_node == src: break
+        - selected_node = parent[selected_node]
+    - reverse the vector path
+    - print the path
+
+- else:
+    - print negative cycle exists
+    - selected_node = last_updated_node
+    - for i = 1 to n-1:
+        - selected_node = parent[selected_node]
+    - first_node = selected_node
+    - declare a vector "cycle"
+    - cycle.push_back(selected_node)
+    - while true:
+        - selected_node = parent[selected_node]
+        - cycle.push_back(selected_node)
+        - if selected_node == last_updated_node:
+            - break
+        - reverse the "cycle" vector
+        - print the cycle
+
+
+
+Pseudocode of Floyd-Warshall
+============================
+
+
+Time Complexity: O(V^3)
+Space Complexity: O(V^2)
+
+Input -> A weighted graph as an adjacency matrix
+Output -> All pair Shortest distance
+
+
+- Create a distance matrix "d" where d[i][j] = x where there is a direct
+ edge from node "i" to node "j" and the cost is "x"
+- for all node "i" d[i][i] = 0
+- for all nodes "i" & "j" where there isn't any direct edge from "i" to "j",
+ d[i][j] = INF
+
+
+
+- for all node "k"
+    - for all node "u"
+        - for all node "v"
+            - d[u][v] = min(d[u][v], d[u][k] + d[k][v])
+
+
+- Output all pair Shortest distance "d"
