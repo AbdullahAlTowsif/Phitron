@@ -3,42 +3,35 @@ using namespace std;
 int main()
 {
     int n;
-    cout<<"Enter n :";
+    cout<<"Enter n : ";
     cin>>n;
     vector<int>a(n);
-    for(int i=0;i<n;i++)
+    
+    for(int i=1;i<=n;i++)
     {
         cin>>a[i];
     }
     int key;
-    cout<<"Enter the key value you want to search :";
+    cout<<"Enter the value you want to search : ";
     cin>>key;
-    int mid,beg=0,nd=n,flag=0;
-    while(beg<=nd)
+    int first=1,last=n;
+    int mid;
+    while(first<=last)
     {
-        mid=(beg+nd)/2;
+        mid=(first+last)/2;
         if(a[mid]==key)
         {
-            flag=1;
-            break;
+            cout<<"Value is founded!"<<endl;
+            return 0;
         }
         else if(a[mid]<key)
         {
-            beg=mid+1;
+             first=mid+1;
         }
         else
         {
-            nd=mid-1;
+            last=mid-1;
         }
     }
-    for(int i=0;i<n;i++)
-    {
-        if(a[i]==a[i+1] && a[i+1]==key)
-        {
-            cout<<"Yes\n";
-            return 0;
-        }
-    }
-    cout<<"No\n";
-    return 0;
+    printf("Value is not founded\n");
 }
